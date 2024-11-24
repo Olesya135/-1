@@ -1,17 +1,28 @@
-import os
 import datetime
-import requests
 import logging
 import math
+
+import requests
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
+
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token='7725565955:AAF5Dnh5f8ummbh0HZr1NnpMN2jqDwkkz4g')
 dp = Dispatcher(bot)
+
+async def set_default_commands(dp):
+    await dp.bot.set_my_commands([types.BotCommand("start", "Запустить бота"), types.BotCommand("help", "Помощь"),])
+
 @dp.message_handler(commands=['start'])
 async def send_welcome(message: types.Message):
     await message.reply("Привет! Напиши мне название города и я пришлю сводку погоды")
+
+@dp.message_handler(commands=['help'])
+async def set_default_commands(message: types.Message):
+    await message.reply(f"/start\n"
+                        f"/help\n")
+
 @dp.message_handler()
 async def echo(message: types.Message):
     city = message.text

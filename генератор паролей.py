@@ -1,8 +1,7 @@
-from tkinter import *
-from tkinter import ttk
-from tkinter.messagebox import showinfo
-import pyperclip
 import random
+from tkinter import *
+from tkinter.messagebox import showinfo
+
 
 def generate():
     characters = []
@@ -12,11 +11,9 @@ def generate():
         characters += [str(i) for i in range(10)]
     if include_special.get():
         characters += ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')']
-
     if not characters:
         showinfo("Ошибка", "Пожалуйста, выберите хотя бы один вариант!")
         return
-
     password = ''.join(random.choice(characters) for i in range(passlen.get()))
     passstr.set(password)
 

@@ -2,39 +2,33 @@ import sqlite3
 from tkinter import *
 from tkinter import messagebox
 
-
 def init_db():
     conn = sqlite3.connect('users.db')
     cursor = conn.cursor()
     conn.commit()
     cursor.execute('''CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password TEXT)''')
     conn.close()
-
 def register(username, password):
     conn = sqlite3.connect('users.db')
     cursor = conn.cursor()
     conn.commit()
     try:
         cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-
+        conn.commit()
         messagebox.showinfo("Успех", "Пользователь зарегистрирован!")
     except sqlite3.IntegrityError:
         messagebox.showerror("Ошибка", "Пользователь с таким логином уже существует.")
     conn.close()
-
 def authenticater(username, password):
     conn = sqlite3.connect('users.db')
     cursor = conn.cursor()
-    conn.commit()
     cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
     user = cursor.fetchone()
     conn.close()
     return user is not None
-
 def open_registration():
     reg = Toplevel(root)
     conn = sqlite3.connect('users.db')
-    cursor = conn.cursor()
     conn.commit()
     reg.title("Регистрация")
     reg.geometry("250x250")
@@ -49,8 +43,8 @@ def open_registration():
     reg_password = Entry(reg, show='*')
     reg_password.pack(m)
 
-    Button(reg, text="Зарегистрироваться", command=lambda: register(reg_username.get(), reg_password.get())).pack(pady=10)
-
+    Button(reg, text="Зарегистрироваться",
+           command=lambda: register(reg_username.get(), reg_password.get())).pack(pady=10)
 def attempt_login():
     username = username_entry.get()
     password = password_entry.get()
@@ -58,7 +52,6 @@ def attempt_login():
         messagebox.showinfo("Успех", "Вы успешно авторизованы!")
     else:
         messagebox.showerror("Ошибка", "Неверный логин или пароль.")
-
 root = Tk()
 root.title("Авторизация")
 root.geometry("300x300")

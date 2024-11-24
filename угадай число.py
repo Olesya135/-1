@@ -8,6 +8,6 @@ while n<3:
   if b==a:
       m=+1
 if m>0:
-   print("winner")
+   print("winner",a)
 else:
-   print("loser")
+   print("loser",a)
