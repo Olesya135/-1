@@ -1,13 +1,10 @@
 from random import randint
 a=randint(1, 10)
-m=0
-n=0
-while n<3:
-  b=int(input())
-  n=n+1
-  if b==a:
-      m=+1
-if m>0:
-   print("winner",a)
-else:
-   print("loser",a)
+p=3
+while p>0:
+    b=int(input('угодай число от 1 до 10:'))
+    if b==a:
+        print("winner")
+    else:
+        p-=1
+        print(f'loser, осталось попыток: {p}',a)
