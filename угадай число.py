@@ -4,7 +4,7 @@ p=3
 while p>0:
     b=int(input('угодай число от 1 до 10:'))
     if b==a:
-        p-=3
+        p -= 1
         print("winner")
     else:
         p-=1
